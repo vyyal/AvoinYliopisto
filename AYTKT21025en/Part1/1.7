@@ -1,0 +1,58 @@
+Dockerfile:
+============
+
+vyyalacn@UbuntuDocker:~/devops/1.7$ cat Dockerfile
+FROM ubuntu:18.04
+WORKDIR /mydir
+COPY website.sh .
+RUN apt-get update && apt-get install -y curl
+CMD /mydir/website.sh
+
+
+Shell file:
+===========
+
+vyyalacn@UbuntuDocker:~/devops/1.7$ cat website.sh
+#!/bin/bash
+echo "Input website:"; read website; echo "Searching.."; sleep 1; curl http://$website;
+
+
+Build:
+======
+
+
+vyyalacn@UbuntuDocker:~/devops/1.7$ docker build -t curler .
+Sending build context to Docker daemon  3.072kB
+Step 1/5 : FROM ubuntu:18.04
+ ---> 3556258649b2
+Step 2/5 : WORKDIR /mydir
+ ---> Using cache
+ ---> d341a8671af9
+Step 3/5 : COPY website.sh .
+ ---> Using cache
+ ---> 15e2c014c60a
+Step 4/5 : RUN apt-get update && apt-get install -y curl
+ ---> Using cache
+ ---> f2bcc18576e7
+Step 5/5 : CMD /mydir/website.sh
+ ---> Running in cd94e4967430
+Removing intermediate container cd94e4967430
+ ---> 41d4b1fc8297
+Successfully built 41d4b1fc8297
+Successfully tagged curler:latest
+
+
+Running image:
+==============
+
+vyyalacn@UbuntuDocker:~/devops/1.7$ docker run -it curler
+Input website:
+helsinki.fi
+Searching..
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>301 Moved Permanently</title>
+</head><body>
+<h1>Moved Permanently</h1>
+<p>The document has moved <a href="http://www.helsinki.fi/">here</a>.</p>
+</body></html>
