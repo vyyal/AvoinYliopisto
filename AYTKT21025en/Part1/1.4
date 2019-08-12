@@ -1,0 +1,27 @@
+vyyalacn@UbuntuDocker:~$ docker run -d devopsdockeruh/exec_bash_exercise
+1f150a707f4331121bb1d98bbb0ee5c58c419b42284cab01072de26f3416e7af
+
+vyyalacn@UbuntuDocker:~$ docker ps
+CONTAINER ID        IMAGE                               COMMAND             CREATED             STATUS              PORTS               NAMES
+1f150a707f43        devopsdockeruh/exec_bash_exercise   "node index"        7 seconds ago       Up 4 seconds                            peaceful_ishizaka
+
+vyyalacn@UbuntuDocker:~$ docker exec -it peaceful_ishizaka bash
+
+root@1f150a707f43:/usr/app# tail -f ./logs.txt
+Fri, 09 Aug 2019 13:06:05 GMT
+Fri, 09 Aug 2019 13:06:08 GMT
+Fri, 09 Aug 2019 13:06:11 GMT
+Fri, 09 Aug 2019 13:06:14 GMT
+Secret message is:
+"Docker is easy"
+Fri, 09 Aug 2019 13:06:20 GMT
+Fri, 09 Aug 2019 13:06:23 GMT
+Fri, 09 Aug 2019 13:06:26 GMT
+Fri, 09 Aug 2019 13:06:29 GMT
+Secret message is:
+"Docker is easy"
+Fri, 09 Aug 2019 13:06:35 GMT
+Fri, 09 Aug 2019 13:06:38 GMT
+Fri, 09 Aug 2019 13:06:41 GMT
+^C
+
