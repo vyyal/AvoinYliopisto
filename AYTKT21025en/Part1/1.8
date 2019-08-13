@@ -1,0 +1,28 @@
+
+
+vyyalacn@UbuntuDocker:~/devops/1.8$ ls
+vyyalacn@UbuntuDocker:~/devops/1.8$ touch logs.txt
+
+vyyalacn@UbuntuDocker:~/devops/1.8$ docker run -d -v $(pwd)/logs.txt:/usr/app/logs.txt devopsdockeruh/first_volume_exercise
+b2278bf0c47999b92ee82e4511f3ab786a66a15d2fe1b6f32e6f0b96a98c3051
+
+vyyalacn@UbuntuDocker:~/devops/1.8$ ls -ltr
+total 4
+-rw-rw-r-- 1 vyyalacn vyyalacn 60 Aug 13 13:06 logs.txt
+
+vyyalacn@UbuntuDocker:~/devops/1.8$ cat logs.txt
+Tue, 13 Aug 2019 13:06:42 GMT
+Tue, 13 Aug 2019 13:06:45 GMT
+Tue, 13 Aug 2019 13:06:48 GMT
+Tue, 13 Aug 2019 13:06:51 GMT
+Secret message is:
+"Volume bind mount is easy"
+Tue, 13 Aug 2019 13:06:57 GMT
+Tue, 13 Aug 2019 13:07:00 GMT
+Tue, 13 Aug 2019 13:07:03 GMT
+Tue, 13 Aug 2019 13:07:06 GMT
+Secret message is:
+"Volume bind mount is easy"
+Tue, 13 Aug 2019 13:07:12 GMT
+Tue, 13 Aug 2019 13:07:15 GMT
+Tue, 13 Aug 2019 13:07:18 GMT

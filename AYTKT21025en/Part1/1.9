@@ -1,0 +1,24 @@
+vyyalacn@UbuntuDocker:~/devops/1.9$ docker run -d -p 8080:80 devopsdockeruh/ports_exercise
+6cdfb185eb61d7c5ad89b8ed44f8e6a819fffb2df268de22b7aa2ff3f71feb03
+
+vyyalacn@UbuntuDocker:~/devops/1.9$ docker ps
+CONTAINER ID        IMAGE                           COMMAND             CREATED             STATUS              PORTS                  NAMES
+6cdfb185eb61        devopsdockeruh/ports_exercise   "npm start"         12 seconds ago      Up 9 seconds        0.0.0.0:8080->80/tcp   happy_keller
+
+vyyalacn@UbuntuDocker:~/devops/1.9$ wget http://localhost:8080
+--2019-08-13 13:50:29--  http://localhost:8080/
+Resolving localhost (localhost)... 127.0.0.1
+Connecting to localhost (localhost)|127.0.0.1|:8080... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 28 [text/html]
+Saving to: ‘index.html.1’
+
+index.html.1                            100%[============================================================================>]      28  --.-KB/s    in 0s
+
+2019-08-13 13:50:29 (3.81 MB/s) - ‘index.html.1’ saved [28/28]
+
+
+vyyalacn@UbuntuDocker:~/devops/1.9$ cat index.html
+Ports configured correctly!!
+
+
