@@ -6,7 +6,7 @@ FROM ubuntu:18.04
 
 WORKDIR /backend-example-docker
 
-RUN apt-get update && apt-get install -y wget curl git
+RUN apt-get update && apt-get install -y curl git
 
 RUN git clone https://github.com/docker-hy/backend-example-docker.git /backend-example-docker
 
@@ -25,34 +25,33 @@ Building image:
 ===============
 
 vyyalacn@UbuntuDocker:~/devops/1.11$ docker build -t backend-example .
-Sending build context to Docker daemon  2.048kB
+Sending build context to Docker daemon   2.56kB
 Step 1/8 : FROM ubuntu:18.04
  ---> 3556258649b2
 Step 2/8 : WORKDIR /backend-example-docker
- ---> Running in bb570a6edfce
-Removing intermediate container bb570a6edfce
+ ---> Using cache
  ---> a8949784dda6
-Step 3/8 : RUN apt-get update && apt-get install -y wget curl git
- ---> Running in 4b9b00586fbd
+Step 3/8 : RUN apt-get update && apt-get install -y curl git
+ ---> Running in d01db2bc130c
 Get:1 http://security.ubuntu.com/ubuntu bionic-security InRelease [88.7 kB]
 Get:2 http://archive.ubuntu.com/ubuntu bionic InRelease [242 kB]
-Get:3 http://archive.ubuntu.com/ubuntu bionic-updates InRelease [88.7 kB]
-Get:4 http://archive.ubuntu.com/ubuntu bionic-backports InRelease [74.6 kB]
-Get:5 http://archive.ubuntu.com/ubuntu bionic/main amd64 Packages [1344 kB]
-Get:6 http://archive.ubuntu.com/ubuntu bionic/universe amd64 Packages [11.3 MB]
-Get:7 http://archive.ubuntu.com/ubuntu bionic/restricted amd64 Packages [13.5 kB]
-Get:8 http://archive.ubuntu.com/ubuntu bionic/multiverse amd64 Packages [186 kB]
-Get:9 http://archive.ubuntu.com/ubuntu bionic-updates/restricted amd64 Packages [16.8 kB]
-Get:10 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 Packages [921 kB]
-Get:11 http://archive.ubuntu.com/ubuntu bionic-updates/multiverse amd64 Packages [7216 B]
-Get:12 http://archive.ubuntu.com/ubuntu bionic-updates/universe amd64 Packages [1263 kB]
-Get:13 http://archive.ubuntu.com/ubuntu bionic-backports/main amd64 Packages [2496 B]
-Get:14 http://archive.ubuntu.com/ubuntu bionic-backports/universe amd64 Packages [3930 B]
-Get:15 http://security.ubuntu.com/ubuntu bionic-security/multiverse amd64 Packages [4173 B]
-Get:16 http://security.ubuntu.com/ubuntu bionic-security/universe amd64 Packages [736 kB]
-Get:17 http://security.ubuntu.com/ubuntu bionic-security/main amd64 Packages [611 kB]
-Get:18 http://security.ubuntu.com/ubuntu bionic-security/restricted amd64 Packages [6222 B]
-Fetched 16.9 MB in 17s (1013 kB/s)
+Get:3 http://security.ubuntu.com/ubuntu bionic-security/multiverse amd64 Packages [4173 B]
+Get:4 http://archive.ubuntu.com/ubuntu bionic-updates InRelease [88.7 kB]
+Get:5 http://archive.ubuntu.com/ubuntu bionic-backports InRelease [74.6 kB]
+Get:6 http://security.ubuntu.com/ubuntu bionic-security/restricted amd64 Packages [6222 B]
+Get:7 http://security.ubuntu.com/ubuntu bionic-security/main amd64 Packages [612 kB]
+Get:8 http://security.ubuntu.com/ubuntu bionic-security/universe amd64 Packages [736 kB]
+Get:9 http://archive.ubuntu.com/ubuntu bionic/universe amd64 Packages [11.3 MB]
+Get:10 http://archive.ubuntu.com/ubuntu bionic/restricted amd64 Packages [13.5 kB]
+Get:11 http://archive.ubuntu.com/ubuntu bionic/main amd64 Packages [1344 kB]
+Get:12 http://archive.ubuntu.com/ubuntu bionic/multiverse amd64 Packages [186 kB]
+Get:13 http://archive.ubuntu.com/ubuntu bionic-updates/universe amd64 Packages [1263 kB]
+Get:14 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 Packages [921 kB]
+Get:15 http://archive.ubuntu.com/ubuntu bionic-updates/multiverse amd64 Packages [7216 B]
+Get:16 http://archive.ubuntu.com/ubuntu bionic-updates/restricted amd64 Packages [16.8 kB]
+Get:17 http://archive.ubuntu.com/ubuntu bionic-backports/universe amd64 Packages [3930 B]
+Get:18 http://archive.ubuntu.com/ubuntu bionic-backports/main amd64 Packages [2496 B]
+Fetched 17.0 MB in 2s (8362 kB/s)
 Reading package lists...
 Reading package lists...
 Building dependency tree...
@@ -85,10 +84,10 @@ The following NEW packages will be installed:
   libsasl2-2 libsasl2-modules libsasl2-modules-db libsqlite3-0 libssl1.0.0
   libssl1.1 libwind0-heimdal libx11-6 libx11-data libxau6 libxcb1 libxdmcp6
   libxext6 libxmuu1 multiarch-support netbase openssh-client openssl patch
-  perl perl-modules-5.26 publicsuffix wget xauth
-0 upgraded, 57 newly installed, 0 to remove and 3 not upgraded.
-Need to get 19.6 MB of archives.
-After this operation, 105 MB of additional disk space will be used.
+  perl perl-modules-5.26 publicsuffix xauth
+0 upgraded, 56 newly installed, 0 to remove and 3 not upgraded.
+Need to get 19.2 MB of archives.
+After this operation, 104 MB of additional disk space will be used.
 Get:1 http://archive.ubuntu.com/ubuntu bionic/main amd64 multiarch-support amd64 2.27-3ubuntu1 [6916 B]
 Get:2 http://archive.ubuntu.com/ubuntu bionic/main amd64 libxau6 amd64 1:1.0.8-1 [8376 B]
 Get:3 http://archive.ubuntu.com/ubuntu bionic/main amd64 libbsd0 amd64 0.8.7-1 [41.5 kB]
@@ -121,33 +120,32 @@ Get:29 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 libssl1.0.0 am
 Get:30 http://archive.ubuntu.com/ubuntu bionic/main amd64 libxmuu1 amd64 2:1.1.2-2 [9674 B]
 Get:31 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 openssh-client amd64 1:7.6p1-4ubuntu0.3 [614 kB]
 Get:32 http://archive.ubuntu.com/ubuntu bionic/main amd64 publicsuffix all 20180223.1310-1 [97.6 kB]
-Get:33 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 wget amd64 1.19.4-1ubuntu2.2 [316 kB]
-Get:34 http://archive.ubuntu.com/ubuntu bionic/main amd64 xauth amd64 1:1.0.10-1 [24.6 kB]
-Get:35 http://archive.ubuntu.com/ubuntu bionic/main amd64 libroken18-heimdal amd64 7.5.0+dfsg-1 [41.3 kB]
-Get:36 http://archive.ubuntu.com/ubuntu bionic/main amd64 libasn1-8-heimdal amd64 7.5.0+dfsg-1 [175 kB]
-Get:37 http://archive.ubuntu.com/ubuntu bionic/main amd64 libheimbase1-heimdal amd64 7.5.0+dfsg-1 [29.3 kB]
-Get:38 http://archive.ubuntu.com/ubuntu bionic/main amd64 libhcrypto4-heimdal amd64 7.5.0+dfsg-1 [85.9 kB]
-Get:39 http://archive.ubuntu.com/ubuntu bionic/main amd64 libwind0-heimdal amd64 7.5.0+dfsg-1 [47.8 kB]
-Get:40 http://archive.ubuntu.com/ubuntu bionic/main amd64 libhx509-5-heimdal amd64 7.5.0+dfsg-1 [107 kB]
-Get:41 http://archive.ubuntu.com/ubuntu bionic/main amd64 libkrb5-26-heimdal amd64 7.5.0+dfsg-1 [206 kB]
-Get:42 http://archive.ubuntu.com/ubuntu bionic/main amd64 libheimntlm0-heimdal amd64 7.5.0+dfsg-1 [14.8 kB]
-Get:43 http://archive.ubuntu.com/ubuntu bionic/main amd64 libgssapi3-heimdal amd64 7.5.0+dfsg-1 [96.5 kB]
-Get:44 http://archive.ubuntu.com/ubuntu bionic/main amd64 libsasl2-modules-db amd64 2.1.27~101-g0780600+dfsg-3ubuntu2 [14.8 kB]
-Get:45 http://archive.ubuntu.com/ubuntu bionic/main amd64 libsasl2-2 amd64 2.1.27~101-g0780600+dfsg-3ubuntu2 [49.2 kB]
-Get:46 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 libldap-common all 2.4.45+dfsg-1ubuntu1.3 [16.9 kB]
-Get:47 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 libldap-2.4-2 amd64 2.4.45+dfsg-1ubuntu1.3 [155 kB]
-Get:48 http://archive.ubuntu.com/ubuntu bionic/main amd64 libnghttp2-14 amd64 1.30.0-1ubuntu1 [77.8 kB]
-Get:49 http://archive.ubuntu.com/ubuntu bionic/main amd64 librtmp1 amd64 2.4+20151223.gitfa8646d.1-1 [54.2 kB]
-Get:50 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 libcurl4 amd64 7.58.0-2ubuntu3.7 [214 kB]
-Get:51 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 curl amd64 7.58.0-2ubuntu3.7 [159 kB]
-Get:52 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 libcurl3-gnutls amd64 7.58.0-2ubuntu3.7 [212 kB]
-Get:53 http://archive.ubuntu.com/ubuntu bionic/main amd64 liberror-perl all 0.17025-1 [22.8 kB]
-Get:54 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 git-man all 1:2.17.1-1ubuntu0.4 [803 kB]
-Get:55 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 git amd64 1:2.17.1-1ubuntu0.4 [3907 kB]
-Get:56 http://archive.ubuntu.com/ubuntu bionic/main amd64 libsasl2-modules amd64 2.1.27~101-g0780600+dfsg-3ubuntu2 [48.7 kB]
-Get:57 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 patch amd64 2.7.6-2ubuntu1.1 [102 kB]
+Get:33 http://archive.ubuntu.com/ubuntu bionic/main amd64 xauth amd64 1:1.0.10-1 [24.6 kB]
+Get:34 http://archive.ubuntu.com/ubuntu bionic/main amd64 libroken18-heimdal amd64 7.5.0+dfsg-1 [41.3 kB]
+Get:35 http://archive.ubuntu.com/ubuntu bionic/main amd64 libasn1-8-heimdal amd64 7.5.0+dfsg-1 [175 kB]
+Get:36 http://archive.ubuntu.com/ubuntu bionic/main amd64 libheimbase1-heimdal amd64 7.5.0+dfsg-1 [29.3 kB]
+Get:37 http://archive.ubuntu.com/ubuntu bionic/main amd64 libhcrypto4-heimdal amd64 7.5.0+dfsg-1 [85.9 kB]
+Get:38 http://archive.ubuntu.com/ubuntu bionic/main amd64 libwind0-heimdal amd64 7.5.0+dfsg-1 [47.8 kB]
+Get:39 http://archive.ubuntu.com/ubuntu bionic/main amd64 libhx509-5-heimdal amd64 7.5.0+dfsg-1 [107 kB]
+Get:40 http://archive.ubuntu.com/ubuntu bionic/main amd64 libkrb5-26-heimdal amd64 7.5.0+dfsg-1 [206 kB]
+Get:41 http://archive.ubuntu.com/ubuntu bionic/main amd64 libheimntlm0-heimdal amd64 7.5.0+dfsg-1 [14.8 kB]
+Get:42 http://archive.ubuntu.com/ubuntu bionic/main amd64 libgssapi3-heimdal amd64 7.5.0+dfsg-1 [96.5 kB]
+Get:43 http://archive.ubuntu.com/ubuntu bionic/main amd64 libsasl2-modules-db amd64 2.1.27~101-g0780600+dfsg-3ubuntu2 [14.8 kB]
+Get:44 http://archive.ubuntu.com/ubuntu bionic/main amd64 libsasl2-2 amd64 2.1.27~101-g0780600+dfsg-3ubuntu2 [49.2 kB]
+Get:45 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 libldap-common all 2.4.45+dfsg-1ubuntu1.3 [16.9 kB]
+Get:46 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 libldap-2.4-2 amd64 2.4.45+dfsg-1ubuntu1.3 [155 kB]
+Get:47 http://archive.ubuntu.com/ubuntu bionic/main amd64 libnghttp2-14 amd64 1.30.0-1ubuntu1 [77.8 kB]
+Get:48 http://archive.ubuntu.com/ubuntu bionic/main amd64 librtmp1 amd64 2.4+20151223.gitfa8646d.1-1 [54.2 kB]
+Get:49 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 libcurl4 amd64 7.58.0-2ubuntu3.7 [214 kB]
+Get:50 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 curl amd64 7.58.0-2ubuntu3.7 [159 kB]
+Get:51 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 libcurl3-gnutls amd64 7.58.0-2ubuntu3.7 [212 kB]
+Get:52 http://archive.ubuntu.com/ubuntu bionic/main amd64 liberror-perl all 0.17025-1 [22.8 kB]
+Get:53 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 git-man all 1:2.17.1-1ubuntu0.4 [803 kB]
+Get:54 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 git amd64 1:2.17.1-1ubuntu0.4 [3907 kB]
+Get:55 http://archive.ubuntu.com/ubuntu bionic/main amd64 libsasl2-modules amd64 2.1.27~101-g0780600+dfsg-3ubuntu2 [48.7 kB]
+Get:56 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 patch amd64 2.7.6-2ubuntu1.1 [102 kB]
 debconf: delaying package configuration, since apt-utils is not installed
-Fetched 19.6 MB in 3min 34s (91.4 kB/s)
+Fetched 19.2 MB in 4min 57s (64.9 kB/s)
 Selecting previously unselected package multiarch-support.
 (Reading database ... 4040 files and directories currently installed.)
 Preparing to unpack .../multiarch-support_2.27-3ubuntu1_amd64.deb ...
@@ -247,80 +245,77 @@ Unpacking openssh-client (1:7.6p1-4ubuntu0.3) ...
 Selecting previously unselected package publicsuffix.
 Preparing to unpack .../30-publicsuffix_20180223.1310-1_all.deb ...
 Unpacking publicsuffix (20180223.1310-1) ...
-Selecting previously unselected package wget.
-Preparing to unpack .../31-wget_1.19.4-1ubuntu2.2_amd64.deb ...
-Unpacking wget (1.19.4-1ubuntu2.2) ...
 Selecting previously unselected package xauth.
-Preparing to unpack .../32-xauth_1%3a1.0.10-1_amd64.deb ...
+Preparing to unpack .../31-xauth_1%3a1.0.10-1_amd64.deb ...
 Unpacking xauth (1:1.0.10-1) ...
 Selecting previously unselected package libroken18-heimdal:amd64.
-Preparing to unpack .../33-libroken18-heimdal_7.5.0+dfsg-1_amd64.deb ...
+Preparing to unpack .../32-libroken18-heimdal_7.5.0+dfsg-1_amd64.deb ...
 Unpacking libroken18-heimdal:amd64 (7.5.0+dfsg-1) ...
 Selecting previously unselected package libasn1-8-heimdal:amd64.
-Preparing to unpack .../34-libasn1-8-heimdal_7.5.0+dfsg-1_amd64.deb ...
+Preparing to unpack .../33-libasn1-8-heimdal_7.5.0+dfsg-1_amd64.deb ...
 Unpacking libasn1-8-heimdal:amd64 (7.5.0+dfsg-1) ...
 Selecting previously unselected package libheimbase1-heimdal:amd64.
-Preparing to unpack .../35-libheimbase1-heimdal_7.5.0+dfsg-1_amd64.deb ...
+Preparing to unpack .../34-libheimbase1-heimdal_7.5.0+dfsg-1_amd64.deb ...
 Unpacking libheimbase1-heimdal:amd64 (7.5.0+dfsg-1) ...
 Selecting previously unselected package libhcrypto4-heimdal:amd64.
-Preparing to unpack .../36-libhcrypto4-heimdal_7.5.0+dfsg-1_amd64.deb ...
+Preparing to unpack .../35-libhcrypto4-heimdal_7.5.0+dfsg-1_amd64.deb ...
 Unpacking libhcrypto4-heimdal:amd64 (7.5.0+dfsg-1) ...
 Selecting previously unselected package libwind0-heimdal:amd64.
-Preparing to unpack .../37-libwind0-heimdal_7.5.0+dfsg-1_amd64.deb ...
+Preparing to unpack .../36-libwind0-heimdal_7.5.0+dfsg-1_amd64.deb ...
 Unpacking libwind0-heimdal:amd64 (7.5.0+dfsg-1) ...
 Selecting previously unselected package libhx509-5-heimdal:amd64.
-Preparing to unpack .../38-libhx509-5-heimdal_7.5.0+dfsg-1_amd64.deb ...
+Preparing to unpack .../37-libhx509-5-heimdal_7.5.0+dfsg-1_amd64.deb ...
 Unpacking libhx509-5-heimdal:amd64 (7.5.0+dfsg-1) ...
 Selecting previously unselected package libkrb5-26-heimdal:amd64.
-Preparing to unpack .../39-libkrb5-26-heimdal_7.5.0+dfsg-1_amd64.deb ...
+Preparing to unpack .../38-libkrb5-26-heimdal_7.5.0+dfsg-1_amd64.deb ...
 Unpacking libkrb5-26-heimdal:amd64 (7.5.0+dfsg-1) ...
 Selecting previously unselected package libheimntlm0-heimdal:amd64.
-Preparing to unpack .../40-libheimntlm0-heimdal_7.5.0+dfsg-1_amd64.deb ...
+Preparing to unpack .../39-libheimntlm0-heimdal_7.5.0+dfsg-1_amd64.deb ...
 Unpacking libheimntlm0-heimdal:amd64 (7.5.0+dfsg-1) ...
 Selecting previously unselected package libgssapi3-heimdal:amd64.
-Preparing to unpack .../41-libgssapi3-heimdal_7.5.0+dfsg-1_amd64.deb ...
+Preparing to unpack .../40-libgssapi3-heimdal_7.5.0+dfsg-1_amd64.deb ...
 Unpacking libgssapi3-heimdal:amd64 (7.5.0+dfsg-1) ...
 Selecting previously unselected package libsasl2-modules-db:amd64.
-Preparing to unpack .../42-libsasl2-modules-db_2.1.27~101-g0780600+dfsg-3ubuntu2_amd64.deb ...
+Preparing to unpack .../41-libsasl2-modules-db_2.1.27~101-g0780600+dfsg-3ubuntu2_amd64.deb ...
 Unpacking libsasl2-modules-db:amd64 (2.1.27~101-g0780600+dfsg-3ubuntu2) ...
 Selecting previously unselected package libsasl2-2:amd64.
-Preparing to unpack .../43-libsasl2-2_2.1.27~101-g0780600+dfsg-3ubuntu2_amd64.deb ...
+Preparing to unpack .../42-libsasl2-2_2.1.27~101-g0780600+dfsg-3ubuntu2_amd64.deb ...
 Unpacking libsasl2-2:amd64 (2.1.27~101-g0780600+dfsg-3ubuntu2) ...
 Selecting previously unselected package libldap-common.
-Preparing to unpack .../44-libldap-common_2.4.45+dfsg-1ubuntu1.3_all.deb ...
+Preparing to unpack .../43-libldap-common_2.4.45+dfsg-1ubuntu1.3_all.deb ...
 Unpacking libldap-common (2.4.45+dfsg-1ubuntu1.3) ...
 Selecting previously unselected package libldap-2.4-2:amd64.
-Preparing to unpack .../45-libldap-2.4-2_2.4.45+dfsg-1ubuntu1.3_amd64.deb ...
+Preparing to unpack .../44-libldap-2.4-2_2.4.45+dfsg-1ubuntu1.3_amd64.deb ...
 Unpacking libldap-2.4-2:amd64 (2.4.45+dfsg-1ubuntu1.3) ...
 Selecting previously unselected package libnghttp2-14:amd64.
-Preparing to unpack .../46-libnghttp2-14_1.30.0-1ubuntu1_amd64.deb ...
+Preparing to unpack .../45-libnghttp2-14_1.30.0-1ubuntu1_amd64.deb ...
 Unpacking libnghttp2-14:amd64 (1.30.0-1ubuntu1) ...
 Selecting previously unselected package librtmp1:amd64.
-Preparing to unpack .../47-librtmp1_2.4+20151223.gitfa8646d.1-1_amd64.deb ...
+Preparing to unpack .../46-librtmp1_2.4+20151223.gitfa8646d.1-1_amd64.deb ...
 Unpacking librtmp1:amd64 (2.4+20151223.gitfa8646d.1-1) ...
 Selecting previously unselected package libcurl4:amd64.
-Preparing to unpack .../48-libcurl4_7.58.0-2ubuntu3.7_amd64.deb ...
+Preparing to unpack .../47-libcurl4_7.58.0-2ubuntu3.7_amd64.deb ...
 Unpacking libcurl4:amd64 (7.58.0-2ubuntu3.7) ...
 Selecting previously unselected package curl.
-Preparing to unpack .../49-curl_7.58.0-2ubuntu3.7_amd64.deb ...
+Preparing to unpack .../48-curl_7.58.0-2ubuntu3.7_amd64.deb ...
 Unpacking curl (7.58.0-2ubuntu3.7) ...
 Selecting previously unselected package libcurl3-gnutls:amd64.
-Preparing to unpack .../50-libcurl3-gnutls_7.58.0-2ubuntu3.7_amd64.deb ...
+Preparing to unpack .../49-libcurl3-gnutls_7.58.0-2ubuntu3.7_amd64.deb ...
 Unpacking libcurl3-gnutls:amd64 (7.58.0-2ubuntu3.7) ...
 Selecting previously unselected package liberror-perl.
-Preparing to unpack .../51-liberror-perl_0.17025-1_all.deb ...
+Preparing to unpack .../50-liberror-perl_0.17025-1_all.deb ...
 Unpacking liberror-perl (0.17025-1) ...
 Selecting previously unselected package git-man.
-Preparing to unpack .../52-git-man_1%3a2.17.1-1ubuntu0.4_all.deb ...
+Preparing to unpack .../51-git-man_1%3a2.17.1-1ubuntu0.4_all.deb ...
 Unpacking git-man (1:2.17.1-1ubuntu0.4) ...
 Selecting previously unselected package git.
-Preparing to unpack .../53-git_1%3a2.17.1-1ubuntu0.4_amd64.deb ...
+Preparing to unpack .../52-git_1%3a2.17.1-1ubuntu0.4_amd64.deb ...
 Unpacking git (1:2.17.1-1ubuntu0.4) ...
 Selecting previously unselected package libsasl2-modules:amd64.
-Preparing to unpack .../54-libsasl2-modules_2.1.27~101-g0780600+dfsg-3ubuntu2_amd64.deb ...
+Preparing to unpack .../53-libsasl2-modules_2.1.27~101-g0780600+dfsg-3ubuntu2_amd64.deb ...
 Unpacking libsasl2-modules:amd64 (2.1.27~101-g0780600+dfsg-3ubuntu2) ...
 Selecting previously unselected package patch.
-Preparing to unpack .../55-patch_2.7.6-2ubuntu1.1_amd64.deb ...
+Preparing to unpack .../54-patch_2.7.6-2ubuntu1.1_amd64.deb ...
 Unpacking patch (2.7.6-2ubuntu1.1) ...
 Setting up libedit2:amd64 (3.1-20170329-1) ...
 Setting up git-man (1:2.17.1-1ubuntu0.4) ...
@@ -354,7 +349,6 @@ debconf: (TERM is not set, so the dialog frontend is not usable.)
 debconf: falling back to frontend: Readline
 Setting up libheimbase1-heimdal:amd64 (7.5.0+dfsg-1) ...
 Setting up openssl (1.1.1-1ubuntu2.1~18.04.4) ...
-Setting up wget (1.19.4-1ubuntu2.2) ...
 Setting up libsqlite3-0:amd64 (3.22.0-1ubuntu0.1) ...
 Setting up libxdmcp6:amd64 (1:1.1.2-3) ...
 Setting up libgdbm-compat4:amd64 (1.14.1-6) ...
@@ -399,15 +393,15 @@ Updating certificates in /etc/ssl/certs...
 0 added, 0 removed; done.
 Running hooks in /etc/ca-certificates/update.d...
 done.
-Removing intermediate container 4b9b00586fbd
- ---> f839db94fe4f
+Removing intermediate container d01db2bc130c
+ ---> b0bb27dcf193
 Step 4/8 : RUN git clone https://github.com/docker-hy/backend-example-docker.git /backend-example-docker
- ---> Running in 2dc531c3fdd3
+ ---> Running in f60bbc8a0a9c
 Cloning into '/backend-example-docker'...
-Removing intermediate container 2dc531c3fdd3
- ---> 6d7b959a0f54
+Removing intermediate container f60bbc8a0a9c
+ ---> 04b91a9b94a8
 Step 5/8 : RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
- ---> Running in 78ec7317cba7
+ ---> Running in 35235c10e964
 
 ## Installing the NodeSource Node.js 10.x repo...
 
@@ -415,13 +409,10 @@ Step 5/8 : RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
 ## Populating apt-get cache...
 
 + apt-get update
-Get:1 http://security.ubuntu.com/ubuntu bionic-security InRelease [88.7 kB]
-Hit:2 http://archive.ubuntu.com/ubuntu bionic InRelease
-Hit:3 http://archive.ubuntu.com/ubuntu bionic-updates InRelease
-Hit:4 http://archive.ubuntu.com/ubuntu bionic-backports InRelease
-Get:5 http://security.ubuntu.com/ubuntu bionic-security/universe amd64 Packages [736 kB]
-Get:6 http://security.ubuntu.com/ubuntu bionic-security/main amd64 Packages [612 kB]
-Fetched 1437 kB in 1s (2206 kB/s)
+Hit:1 http://archive.ubuntu.com/ubuntu bionic InRelease
+Hit:2 http://archive.ubuntu.com/ubuntu bionic-updates InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu bionic-backports InRelease
+Hit:4 http://security.ubuntu.com/ubuntu bionic-security InRelease
 Reading package lists...
 
 ## Installing packages required for setup: lsb-release gnupg...
@@ -446,13 +437,13 @@ OK
 ## Running `apt-get update` for you...
 
 + apt-get update
-Hit:1 http://security.ubuntu.com/ubuntu bionic-security InRelease
+Get:1 http://security.ubuntu.com/ubuntu bionic-security InRelease [88.7 kB]
 Get:2 https://deb.nodesource.com/node_10.x bionic InRelease [4584 B]
-Hit:3 http://archive.ubuntu.com/ubuntu bionic InRelease
-Hit:4 http://archive.ubuntu.com/ubuntu bionic-updates InRelease
-Get:5 https://deb.nodesource.com/node_10.x bionic/main amd64 Packages [768 B]
+Get:3 https://deb.nodesource.com/node_10.x bionic/main amd64 Packages [768 B]
+Hit:4 http://archive.ubuntu.com/ubuntu bionic InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu bionic-updates InRelease
 Hit:6 http://archive.ubuntu.com/ubuntu bionic-backports InRelease
-Fetched 5352 B in 0s (10.9 kB/s)
+Fetched 94.1 kB in 1s (113 kB/s)
 Reading package lists...
 
 ## Run `sudo apt-get install -y nodejs` to install Node.js 10.x and npm
@@ -464,10 +455,10 @@ Reading package lists...
      sudo apt-get update && sudo apt-get install yarn
 
 
-Removing intermediate container 78ec7317cba7
- ---> 9eb81349a030
+Removing intermediate container 35235c10e964
+ ---> 686fbfc68938
 Step 6/8 : RUN apt install -y nodejs
- ---> Running in 7e20b821e56e
+ ---> Running in 1ee65772622e
 
 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
 
@@ -494,9 +485,9 @@ Get:6 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 python2.7 amd64
 Get:7 http://archive.ubuntu.com/ubuntu bionic/main amd64 libpython-stdlib amd64 2.7.15~rc1-1 [7620 B]
 Get:8 http://archive.ubuntu.com/ubuntu bionic/main amd64 python amd64 2.7.15~rc1-1 [140 kB]
 debconf: delaying package configuration, since apt-utils is not installed
-Fetched 19.8 MB in 2s (9435 kB/s)
+Fetched 19.8 MB in 0s (42.8 MB/s)
 Selecting previously unselected package libpython2.7-minimal:amd64.
-(Reading database ... 8825 files and directories currently installed.)
+(Reading database ... 8814 files and directories currently installed.)
 Preparing to unpack .../0-libpython2.7-minimal_2.7.15-4ubuntu4~18.04_amd64.deb ...
 Unpacking libpython2.7-minimal:amd64 (2.7.15-4ubuntu4~18.04) ...
 Selecting previously unselected package python2.7-minimal.
@@ -519,7 +510,7 @@ Setting up python2.7-minimal (2.7.15-4ubuntu4~18.04) ...
 Linking and byte-compiling packages for runtime python2.7...
 Setting up python-minimal (2.7.15~rc1-1) ...
 Selecting previously unselected package python.
-(Reading database ... 9574 files and directories currently installed.)
+(Reading database ... 9563 files and directories currently installed.)
 Preparing to unpack .../python_2.7.15~rc1-1_amd64.deb ...
 Unpacking python (2.7.15~rc1-1) ...
 Selecting previously unselected package nodejs.
@@ -531,10 +522,10 @@ Setting up libpython2.7-stdlib:amd64 (2.7.15-4ubuntu4~18.04) ...
 Setting up python2.7 (2.7.15-4ubuntu4~18.04) ...
 Setting up libpython-stdlib:amd64 (2.7.15~rc1-1) ...
 Setting up python (2.7.15~rc1-1) ...
-Removing intermediate container 7e20b821e56e
- ---> f26a169a2cb8
+Removing intermediate container 1ee65772622e
+ ---> 21e36b38cf0e
 Step 7/8 : RUN npm install webpack
- ---> Running in c817da576d25
+ ---> Running in e41254d2369e
 
 > nodemon@1.18.9 postinstall /backend-example-docker/node_modules/nodemon
 > node bin/postinstall || exit 0
@@ -546,66 +537,107 @@ npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules/fse
 npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
 
 + webpack@4.39.2
-added 775 packages from 530 contributors and audited 9496 packages in 26.452s
+added 775 packages from 530 contributors and audited 9496 packages in 24.543s
 found 321 vulnerabilities (1 moderate, 320 high)
   run `npm audit fix` to fix them, or `npm audit` for details
-Removing intermediate container c817da576d25
- ---> e00eab344e5a
+Removing intermediate container e41254d2369e
+ ---> c3825a9da9aa
 Step 8/8 : CMD ["/bin/bash"]
- ---> Running in d172262706f3
-Removing intermediate container d172262706f3
- ---> df572d704e9d
-Successfully built df572d704e9d
+ ---> Running in ca5cec52bd4f
+Removing intermediate container ca5cec52bd4f
+ ---> 559edeca366b
+Successfully built 559edeca366b
 Successfully tagged backend-example:latest
-vyyalacn@UbuntuDocker:~/devops/1.11$
 
 
-Running Container
-===================
+Creating volume
+===============
 
-vyyalacn@UbuntuDocker:~/devops/1.11$  docker run -it -p 8000:8000 backend-example
-root@1460b179d950:/backend-example-docker# exit
-exit
-vyyalacn@UbuntuDocker:~/devops/1.11$ docker run -it -p 8000:8000 backend-example npm start
+vyyalacn@UbuntuDocker:~/devops/1.11$ docker volume create logs
+logs
+
+vyyalacn@UbuntuDocker:~/devops/1.11$ docker volume inspect logs
+[
+    {
+        "CreatedAt": "2019-08-15T11:56:41Z",
+        "Driver": "local",
+        "Labels": {},
+        "Mountpoint": "/var/lib/docker/volumes/logs/_data",
+        "Name": "logs",
+        "Options": {},
+        "Scope": "local"
+    }
+]
+
+
+
+Running Container and checking logfile after container stopped and started
+===========================================================================
+
+vyyalacn@UbuntuDocker:~/devops/1.11$ docker run -it -v logs:/backend-example-docker -p 8000:8000 backend-example npm start
 
 > backend-example-docker@1.0.0 start /backend-example-docker
 > cross-env NODE_ENV=production node index.js
 
 Browserslist: caniuse-lite is outdated. Please run next command `npm update caniuse-lite browserslist`
 Started on port 8000
+^Cvyyalacn@UbuntuDocker:~/devops/1.11 sudo cat /var/lib/docker/volumes/logs/_data/logs.txt
 
+8/15/2019, 11:58:44 AM: Connection received in root
+8/15/2019, 12:18:53 PM: Connection received in root
+8/15/2019, 12:18:56 PM: Connection received in root
+8/15/2019, 12:18:58 PM: Connection received in root
+vyyalacn@UbuntuDocker:~/devops/1.11$ docker run -it -v logs:/backend-example-docker -p 8000:8000 backend-example npm start
+
+> backend-example-docker@1.0.0 start /backend-example-docker
+> cross-env NODE_ENV=production node index.js
+
+Browserslist: caniuse-lite is outdated. Please run next command `npm update caniuse-lite browserslist`
+Started on port 8000
+^Cvyyalacn@UbuntuDocker:~/devops/1.11sudo cat /var/lib/docker/volumes/logs/_data/logs.txt
+
+8/15/2019, 11:58:44 AM: Connection received in root
+8/15/2019, 12:18:53 PM: Connection received in root
+8/15/2019, 12:18:56 PM: Connection received in root
+8/15/2019, 12:18:58 PM: Connection received in root
+8/15/2019, 12:21:53 PM: Connection received in root
+8/15/2019, 12:21:56 PM: Connection received in root
+8/15/2019, 12:21:58 PM: Connection received in root
+vyyalacn@UbuntuDocker:~/devops/1.11$
 
 
 
 Response from port 8000
 =======================
 
-vyyalacn@UbuntuDocker:~$ wget http://localhost:8000
---2019-08-14 20:18:45--  http://localhost:8000/
+vyyalacn@UbuntuDocker:~/devops/1.11$ wget http://localhost:8000
+--2019-08-15 12:21:58--  http://localhost:8000/
 Resolving localhost (localhost)... 127.0.0.1
 Connecting to localhost (localhost)|127.0.0.1|:8000... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: 56 [text/html]
-Saving to: ‘index.html.1’
+Saving to: ‘index.html.7’
 
-index.html.1                                    100%[====================================================================================================>]      56  --.-KB/s    in 0s
+index.html.7                                    100%[====================================================================================================>]      56  --.-KB/s    in 0s
 
-2019-08-14 20:18:46 (4.56 MB/s) - ‘index.html.1’ saved [56/56]
+2019-08-15 12:21:58 (6.14 MB/s) - ‘index.html.7’ saved [56/56]
 
-vyyalacn@UbuntuDocker:~$ cat index.html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta content="ie=edge" http-equiv="x-ua-compatible">
-    <title>Webpack App</title>
-    <link href="vendors~main-1.css" rel="stylesheet" />
-    <link href="main.css" rel="stylesheet" />
-  </head>
-  <body>
-    <div id="root">
-    </div>
-    <script src="vendors~main.js" type="text/javascript"></script>
-    <script src="main.js" type="text/javascript"></script>
-  </body>
-</html>
+vyyalacn@UbuntuDocker:~/devops/1.11$ ls -ltr
+total 40
+drwxrwxr-x 2 vyyalacn vyyalacn 4096 Aug 15 07:47 backend-example-docker
+-rw-rw-r-- 1 vyyalacn vyyalacn  329 Aug 15 07:48 Dockerfile
+-rw-rw-r-- 1 vyyalacn vyyalacn   56 Aug 15 08:29 index.html
+-rw-rw-r-- 1 vyyalacn vyyalacn   56 Aug 15 11:58 index.html.1
+-rw-rw-r-- 1 vyyalacn vyyalacn   56 Aug 15 12:18 index.html.2
+-rw-rw-r-- 1 vyyalacn vyyalacn   56 Aug 15 12:18 index.html.3
+-rw-rw-r-- 1 vyyalacn vyyalacn   56 Aug 15 12:18 index.html.4
+-rw-rw-r-- 1 vyyalacn vyyalacn   56 Aug 15 12:21 index.html.5
+-rw-rw-r-- 1 vyyalacn vyyalacn   56 Aug 15 12:21 index.html.6
+-rw-rw-r-- 1 vyyalacn vyyalacn   56 Aug 15 12:21 index.html.7
+vyyalacn@UbuntuDocker:~/devops/1.11$ cat index.html.7
+Port configured correctly, generated message in logs.txt
+vyyalacn@UbuntuDocker:~/devops/1.11$
+vyyalacn@UbuntuDocker:~/devops/1.11$ cat index.html
+Port configured correctly, generated message in logs.txt
+vyyalacn@UbuntuDocker:~/devops/1.11$
+
