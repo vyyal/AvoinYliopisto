@@ -1,0 +1,60 @@
+Dockerfile frontend
+====================
+
+FROM ubuntu:18.04
+
+ENV API_URL=http://localhost:8000
+
+WORKDIR /frontend-example-docker
+
+RUN apt-get update && apt-get install -y wget curl git
+
+RUN git clone https://github.com/docker-hy/frontend-example-docker.git /frontend-example-docker
+
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
+RUN apt install -y nodejs
+
+RUN npm install webpack
+
+EXPOSE 5000
+
+CMD ["/bin/bash"]
+
+
+Dockerfile backend
+===================
+
+FROM ubuntu:18.04
+
+ENV FRONT_URL=http://localhost:5000
+
+WORKDIR /backend-example-docker
+
+RUN apt-get update && apt-get install -y curl git
+
+RUN git clone https://github.com/docker-hy/backend-example-docker.git /backend-example-docker
+
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
+RUN apt install -y nodejs
+
+RUN npm install webpack
+
+EXPOSE 8000
+
+
+CMD ["/bin/bash"]
+
+
+
+Commands for running containers
+================================
+
+vyyalacn@UbuntuDocker:~/devops/1.11$ docker run -d -p 5000:5000 frontend-example npm start
+0763135d19e3cbadee6a8e43fea81266484144172497c264a92ddfd7ee378211
+vyyalacn@UbuntuDocker:~/devops/1.11$ docker run -d -v logs:/backend-example-docker -p 8000:8000 backend-example npm start
+6a5b2b7d87c130f043a6bd4be25acc7e7770a0170078748835f36df534459b0e
+
+vyyalacn@UbuntuDocker:~/devops/1.11$ docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                    NAMES
+6a5b2b7d87c1        backend-example     "npm start"         7 seconds ago       Up 3 seconds        0.0.0.0:8000->8000/tcp   elastic_pascal
+0763135d19e3        frontend-example    "npm start"         41 seconds ago      Up 39 seconds       0.0.0.0:5000->5000/tcp   jolly_herschel
