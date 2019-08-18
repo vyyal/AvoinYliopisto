@@ -1,0 +1,78 @@
+Dockerfile
+============
+
+vyyalacn@UbuntuDocker:~/devops/1.14$ cat Dockerfile
+FROM ruby:2.6.0
+
+WORKDIR /rails-example
+
+RUN apt-get update && apt-get install -y nodejs
+
+RUN git clone https://github.com/docker-hy/rails-example-project.git /rails-example
+RUN bundle install
+RUN rails db:migrate
+
+
+EXPOSE 3000
+
+ENTRYPOINT rails s
+
+CMD ["/bin/bash"]
+
+
+
+
+Running container
+==================
+
+vyyalacn@UbuntuDocker:~/devops/1.14$ docker run -it -p 3000:3000 ruby-example
+=> Booting Puma
+=> Rails 5.2.2.1 application starting in development
+=> Run `rails server -h` for more startup options
+Puma starting in single mode...
+* Version 3.12.0 (ruby 2.6.0-p0), codename: Llamas in Pajamas
+* Min threads: 5, max threads: 5
+* Environment: development
+* Listening on tcp://0.0.0.0:3000
+Use Ctrl-C to stop
+Started GET "/" for 172.17.0.1 at 2019-08-18 19:08:59 +0000
+Cannot render console from 172.17.0.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+   (0.2ms)  SELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC
+  ↳ /usr/local/bundle/gems/activerecord-5.2.2.1/lib/active_record/log_subscriber.rb:98
+Processing by PressesController#new as HTML
+   (0.2ms)  SELECT COUNT(*) FROM "presses"
+  ↳ app/controllers/presses_controller.rb:18
+  Rendering presses/new.html.erb within layouts/application
+  Rendered presses/_form.html.erb (1.2ms)
+  Rendered presses/new.html.erb within layouts/application (3.0ms)
+Completed 200 OK in 726ms (Views: 712.9ms | ActiveRecord: 0.8ms)
+
+
+Started POST "/presses" for 172.17.0.1 at 2019-08-18 19:09:05 +0000
+Cannot render console from 172.17.0.1! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255
+Processing by PressesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"o1Yf4hbyiFKJLcwTpzroVelqxeuiOg7Fiw4Hw/fNK463a/HpsQ9WnvhS+hIP/OqTeSYrvJGejnNk6ZJi7DKCTQ==", "commit"=>"Press"}
+   (0.2ms)  begin transaction
+  ↳ app/controllers/presses_controller.rb:31
+  Press Create (0.7ms)  INSERT INTO "presses" ("created_at", "updated_at") VALUES (?, ?)  [["created_at", "2019-08-18 19:09:05.630569"], ["updated_at", "2019-08-18 19:09:05.630569"]]
+  ↳ app/controllers/presses_controller.rb:31
+   (17.1ms)  commit transaction
+  ↳ app/controllers/presses_controller.rb:31
+Redirected to http://localhost:3000/presses/new
+Completed 302 Found in 33ms (ActiveRecord: 18.0ms)
+
+
+
+
+
+Web results http://localhost:3000/presses
+==========================================
+
+3 presses
+2019-08-18 19:09:09 UTC	Destroy
+2019-08-18 19:09:07 UTC	Destroy
+2019-08-18 19:09:05 UTC	Destroy
+Press more
+
+
+
