@@ -1,47 +1,31 @@
 
-Make an new image
-=================
+Make an new image and push it to Dockerhub
+==========================================
 
-docker push alland/aytkt21025envyyalacn@UbuntuDocker:~/devops/1.14$ docker tag ruby-example alland/aytky21025en
+vyyalacn@UbuntuDocker:~/devops$ docker tag ruby-example alland/ruby-example
 
-
-
-
-vyyalacn@UbuntuDocker:~/devops/1.14$ docker login
-Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
-Username: alland
-Password:
+vyyalacn@UbuntuDocker:~/devops$ docker login
+Authenticating with existing credentials...
 WARNING! Your password will be stored unencrypted in /home/vyyalacn/.docker/config.json.
 Configure a credential helper to remove this warning. See
 https://docs.docker.com/engine/reference/commandline/login/#credentials-store
 
 Login Succeeded
-
-
-vyyalacn@UbuntuDocker:~/devops/1.14$ docker push alland/aytkt21025en
-The push refers to repository [docker.io/alland/aytkt21025en]
-An image does not exist locally with the tag: alland/aytkt21025en
-
-
-Pushing of image to dockerhub
-===============================
-
-vyyalacn@UbuntuDocker:~/devops/1.14$ docker push alland/aytky21025en
-The push refers to repository [docker.io/alland/aytky21025en]
+vyyalacn@UbuntuDocker:~/devops$ docker push alland/ruby-example
+The push refers to repository [docker.io/alland/ruby-example]
 e0d1cd110e1c: Pushed
 746f3bbd64ef: Pushed
 1dc388ac97a2: Pushed
 bfc292b637e9: Pushed
 53359b5a8283: Pushed
-8fcdbfe1b942: Mounted from library/ruby
+8fcdbfe1b942: Pushed
 33e4b5ecc45d: Mounted from library/ruby
-50f1e13ab060: Mounted from library/ruby
+50f1e13ab060: Pushed
 56a89222b908: Mounted from library/ruby
 a89464ad2a8f: Mounted from library/ruby
 76dfa41f0a1d: Mounted from library/ruby
 c240c542ed55: Mounted from library/ruby
 badfbcebf7f8: Mounted from library/ruby
 latest: digest: sha256:9c74e8c0436bb07e2e8c1d024ee5089335885a5082aceb377508a80861591a26 size: 3054
-vyyalacn@UbuntuDocker:~/devops/1.14$
 
 
