@@ -29,3 +29,37 @@ badfbcebf7f8: Mounted from library/ruby
 latest: digest: sha256:9c74e8c0436bb07e2e8c1d024ee5089335885a5082aceb377508a80861591a26 size: 3054
 
 
+Dockerfile
+==========
+
+
+FROM ruby:2.6.0
+
+WORKDIR /rails-example
+
+RUN apt-get update && apt-get install -y nodejs
+
+RUN git clone https://github.com/docker-hy/rails-example-project.git /rails-example
+RUN bundle install
+RUN rails db:migrate
+
+
+EXPOSE 3000
+
+ENTRYPOINT rails s
+
+CMD ["/bin/bash"]
+
+
+
+Link to github
+==============
+
+https://github.com/vyyal/ruby-example
+
+
+Link to Dockerhub
+=================
+
+https://hub.docker.com/r/alland/ruby-example
+
