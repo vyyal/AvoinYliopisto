@@ -65,4 +65,33 @@ badfbcebf7f8: Pushed
 latest: digest: sha256:7b355fd5a666655eeed4fd8b7836824e240611e7916841cfffd02a4cd10a1ce4 size: 3479
 
 
+Releasing app
+=============
+
+
+vyyalacn@UbuntuDocker:~/devops$ heroku container:release -a allu-ruby web
+Releasing images web to allu-ruby... done
+
+
+App information
+================
+
+vyyalacn@UbuntuDocker:~/devops$ heroku info allu-ruby
+=== allu-ruby
+Auto Cert Mgmt: false
+Dynos:          web: 1
+Git URL:        https://git.heroku.com/allu-ruby.git
+Owner:          alland.vyyrylainen@gmail.com
+Region:         eu
+Repo Size:      0 B
+Slug Size:      0 B
+Stack:          container
+Web URL:        https://allu-ruby.herokuapp.com/
+
+
+
+URL to heroku app
+=================
+
+https://allu-ruby.herokuapp.com/
 
