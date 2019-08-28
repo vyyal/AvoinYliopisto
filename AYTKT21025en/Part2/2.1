@@ -1,0 +1,60 @@
+2.1
+
+docker-compose.yml
+===================
+
+
+vyyalacn@UbuntuDocker:~/devops/2.1$ cat docker-compose.yml
+version: '3'
+
+services:
+    first_volume_exercise:
+      image: devopsdockeruh/first_volume_exercise
+      volumes:
+        - ./logs.txt:/usr/app/logs.txt
+      container_name: first_volume_exercise
+
+
+Running docker-compose
+========================
+
+vyyalacn@UbuntuDocker:~/devops/2.1$ docker-compose up
+Starting first_volume_exercise ... done
+Attaching to first_volume_exercise
+first_volume_exercise    | (node:1) ExperimentalWarning: The fs.promises API is experimental
+first_volume_exercise    | Wrote to file /usr/app/logs.txt
+first_volume_exercise    | Wrote to file /usr/app/logs.txt
+first_volume_exercise    | Wrote to file /usr/app/logs.txt
+first_volume_exercise    | Wrote to file /usr/app/logs.txt
+first_volume_exercise    | Wrote to file /usr/app/logs.txt
+first_volume_exercise    | Wrote to file /usr/app/logs.txt
+first_volume_exercise    | Wrote to file /usr/app/logs.txt
+first_volume_exercise    | Wrote to file /usr/app/logs.txt
+first_volume_exercise    | Wrote to file /usr/app/logs.txt
+first_volume_exercise    | Wrote to file /usr/app/logs.txt
+^CGracefully stopping... (press Ctrl+C again to force)
+Stopping first_volume_exercise ... done
+
+
+Listing local copy of log file
+==============================
+
+
+vyyalacn@UbuntuDocker:~/devops/2.1$ ls -ltr
+total 8
+-rw-rw-r-- 1 vyyalacn vyyalacn 205 Aug 27 14:22 docker-compose.yml
+-rw-rw-r-- 1 vyyalacn vyyalacn 334 Aug 28 06:53 logs.txt
+vyyalacn@UbuntuDocker:~/devops/2.1$ cat logs.txt
+Wed, 28 Aug 2019 06:52:53 GMT
+Wed, 28 Aug 2019 06:52:56 GMT
+Wed, 28 Aug 2019 06:52:59 GMT
+Wed, 28 Aug 2019 06:53:02 GMT
+Secret message is:
+"Volume bind mount is easy"
+Wed, 28 Aug 2019 06:53:08 GMT
+Wed, 28 Aug 2019 06:53:11 GMT
+Wed, 28 Aug 2019 06:53:14 GMT
+Wed, 28 Aug 2019 06:53:17 GMT
+Secret message is:
+"Volume bind mount is easy"
+
