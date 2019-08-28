@@ -1,1 +1,36 @@
 2.2
+
+vyyalacn@UbuntuDocker:~/devops/2.2$ cat docker-compose.yml
+version: '3'
+
+services:
+    first_volume_exercise:
+      image: devopsdockeruh/ports_exercise
+      ports:
+        - 80:80
+      container_name: ports_exercise
+
+
+vyyalacn@UbuntuDocker:~/devops/2.2$ docker-compose up
+Creating network "22_default" with the default driver
+Creating ports_exercise ... done
+Attaching to ports_exercise
+ports_exercise           |
+ports_exercise           | > ports_exercise@1.0.0 start /usr/app
+ports_exercise           | > node index.js
+ports_exercise           |
+ports_exercise           | Listening on port 80, this means inside of the container. Use -p to map the port to a port of your local machine.
+
+
+
+vyyalacn@UbuntuDocker:~/devops/2.2$ wget http://localhost:80
+--2019-08-28 08:56:19--  http://localhost/
+Resolving localhost (localhost)... 127.0.0.1
+Connecting to localhost (localhost)|127.0.0.1|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 28 [text/html]
+Saving to: ‘index.html’
+
+index.html          100%[===================>]      28  --.-KB/s    in 0s
+
+2019-08-28 08:56:19 (4.53 MB/s) - ‘index.html’ saved [28/28]
