@@ -1,1 +1,17 @@
 2.4
+
+
+load-balancervyyalacn@UbuntuDocker:~/devops/2.4/scaling-exercise$ docker-compose up -d --scale compute=2
+Starting scaling-exercise_compute_1 ... done
+Starting load-balancer              ... done
+Starting calculator                 ... done
+Creating scaling-exercise_compute_2 ... done
+
+vyyalacn@UbuntuDocker:~/devops/2.4/scaling-exercise$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+6c3ddeaec2f9        compute             "docker-entrypoint.s…"   26 seconds ago      Up 17 seconds       3000/tcp                 scaling-exercise_compute_2
+fafdd90f8cd1        calculator          "docker-entrypoint.s…"   19 minutes ago      Up 27 seconds       0.0.0.0:3000->3000/tcp   calculator
+2fc5ff18cd08        compute             "docker-entrypoint.s…"   19 minutes ago      Up 25 seconds       3000/tcp                 scaling-exercise_compute_1
+73f5e9d732b2        load-balancer       "/app/docker-entrypo…"   19 minutes ago      Up 25 seconds       0.0.0.0:80->80/tcp       load-balancer
+
+
