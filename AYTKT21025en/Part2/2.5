@@ -1,0 +1,74 @@
+2.5
+
+
+before redis installation
+=========================
+
+vyyalacn@UbuntuDocker:~/devops/2.5$ curl -w "@curl-format.txt" -o /dev/null -s "http://localhost:8000/slow"
+time_namelookup:  0.004779
+       time_connect:  0.005601
+    time_appconnect:  0.000000
+   time_pretransfer:  0.005739
+      time_redirect:  0.000000
+ time_starttransfer:  11.019283
+                    ----------
+         time_total:  11.019367
+
+
+
+after redis installation
+========================
+
+vyyalacn@UbuntuDocker:~/devops/2.5$ curl -w "@curl-format.txt" -o /dev/null -s "http://localhost:8000/slow"
+time_namelookup:  0.004250
+       time_connect:  0.000000
+    time_appconnect:  0.000000
+   time_pretransfer:  0.000000
+      time_redirect:  0.000000
+ time_starttransfer:  0.000000
+                    ----------
+         time_total:  0.004333
+vyyalacn@UbuntuDocker:~/devops/2.5$ curl -w "@curl-format.txt" -o /dev/null -s "http://localhost:8000/slow"
+time_namelookup:  0.004220
+       time_connect:  0.000000
+    time_appconnect:  0.000000
+   time_pretransfer:  0.000000
+      time_redirect:  0.000000
+ time_starttransfer:  0.000000
+                    ----------
+         time_total:  0.004341
+
+
+
+
+
+
+
+docker-compose.yml
+====================
+
+
+vyyalacn@UbuntuDocker:~/devops/2.5$ cat docker-compose.yml
+version: '3'
+
+services:
+    redis:
+      image: redis
+      container_name: redis-server
+
+    frontend:
+      build: frontend
+      ports:
+        - 5000:5000
+      container_name: frontend
+      entrypoint: npm start
+
+    backend:
+      build: backend
+      ports:
+        - 8000:8000
+      container_name: backend
+      entrypoint: npm start
+      environment:
+        - REDIS=localhost
+        - REDIS_port=6379
