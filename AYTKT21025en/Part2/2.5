@@ -1,5 +1,36 @@
 2.5
 
+docker-compose.yml
+====================
+
+
+vyyalacn@UbuntuDocker:~/devops/2.5$ cat docker-compose.yml
+version: '3'
+
+services:
+    redis:
+      image: redis
+      container_name: redis-server
+
+    frontend:
+      build: frontend
+      ports:
+        - 5000:5000
+      container_name: frontend
+      entrypoint: npm start
+
+    backend:
+      build: backend
+      ports:
+        - 8000:8000
+      container_name: backend
+      entrypoint: npm start
+      environment:
+        - REDIS=redis-server
+        - REDIS_port=6379
+      depends_on:
+        - "redis"
+
 
 before redis installation
 =========================
@@ -40,35 +71,3 @@ time_namelookup:  0.004220
 
 
 
-
-
-
-
-docker-compose.yml
-====================
-
-
-vyyalacn@UbuntuDocker:~/devops/2.5$ cat docker-compose.yml
-version: '3'
-
-services:
-    redis:
-      image: redis
-      container_name: redis-server
-
-    frontend:
-      build: frontend
-      ports:
-        - 5000:5000
-      container_name: frontend
-      entrypoint: npm start
-
-    backend:
-      build: backend
-      ports:
-        - 8000:8000
-      container_name: backend
-      entrypoint: npm start
-      environment:
-        - REDIS=localhost
-        - REDIS_port=6379
