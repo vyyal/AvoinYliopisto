@@ -1,0 +1,63 @@
+2.6
+
+docker-compose file
+====================
+
+vyyalacn@UbuntuDocker:~/devops/2.6$ cat docker-compose.yml
+version: '3'
+
+services:
+    redis:
+      image: redis
+      container_name: redis-server
+
+    frontend:
+      build: frontend
+      ports:
+        - 5000:5000
+      container_name: frontend
+      entrypoint: npm start
+
+    backend:
+      build: backend
+      ports:
+        - 8000:8000
+      container_name: backend
+      entrypoint: npm start
+      environment:
+        - REDIS=redis-server
+        - REDIS_port=6379
+        - DB_USERNAME=postgres
+        - DB_PASSWORD=MikkiHiiri
+        - DB_NAME=backenddb
+        - DB_HOST=db-server
+      depends_on:
+        - "redis"
+        - "db"
+
+    db:
+      image: postgres
+      restart: always
+      container_name: db-server
+      environment:
+        - POSTGRES_PASSWORD=MikkiHiiri
+        - POSTGRES_USER=postgres
+        - POSTGRES_DB=backenddb
+    adminer:
+      image: adminer
+      restart: always
+      ports:
+        - 8080:8080
+
+
+started processes
+==================
+
+vyyalacn@UbuntuDocker:~/devops/2.6$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+4382b2009f52        26_backend          "npm start"              5 minutes ago       Up 5 minutes        0.0.0.0:8000->8000/tcp   backend
+e28f2144f26e        26_frontend         "npm start"              5 minutes ago       Up 5 minutes        0.0.0.0:5000->5000/tcp   frontend
+3fe81fca81ac        postgres            "docker-entrypoint.s…"   5 minutes ago       Up 5 minutes        5432/tcp                 db-server
+4896241962b9        adminer             "entrypoint.sh docke…"   5 minutes ago       Up 5 minutes        0.0.0.0:8080->8080/tcp   26_adminer_1
+e53d51880979        redis               "docker-entrypoint.s…"   5 minutes ago       Up 5 minutes        6379/tcp                 redis-server
+vyyalacn@UbuntuDocker:~/devops/2.6$
