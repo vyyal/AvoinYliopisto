@@ -1,1 +1,28 @@
 2.7
+
+vyyalacn@UbuntuDocker:~/devops/2.7$ cat docker-compose.yml
+version: '3'
+
+services:
+    frontend:
+      build: frontend
+      ports:
+        - 3000:3000
+      container_name: frontend
+
+    backend:
+      build: backend
+      ports:
+        - 8000:8000
+      container_name: backend
+      volumes:
+        - ./model:/src/model
+
+    training:
+      build: training
+      container_name: training
+      volumes:
+        - ./model:/src/model
+        - ./imgs:/src/imgs
+        - ./training/data:/src/data
+
