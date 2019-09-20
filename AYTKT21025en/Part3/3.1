@@ -1,0 +1,105 @@
+3.1
+
+BACKEND
+===========
+
+vyyalacn@UbuntuDocker:~/devops/3.1/backend$ docker history 29_backend
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+d7f8207084ae        2 weeks ago         /bin/sh -c #(nop)  CMD ["/bin/bash"]            0B
+775cbc58f439        2 weeks ago         /bin/sh -c #(nop)  EXPOSE 8000                  0B
+c8e7789cb9dc        2 weeks ago         /bin/sh -c npm install webpack                  80.4MB
+09910b85344f        2 weeks ago         /bin/sh -c apt install -y nodejs                82.3MB
+2df6c213ca87        2 weeks ago         /bin/sh -c curl -sL https://deb.nodesource.c…   34.6MB
+babc919fa6fc        2 weeks ago         /bin/sh -c git clone https://github.com/dock…   524kB
+5d30a9aecf0b        2 weeks ago         /bin/sh -c apt-get update && apt-get install…   122MB
+3c4efb77bddb        2 weeks ago         /bin/sh -c #(nop) WORKDIR /backend-example-d…   0B
+62687182abd6        2 weeks ago         /bin/sh -c #(nop)  ENV FRONT_URL=http://loca…   0B
+3556258649b2        8 weeks ago         /bin/sh -c #(nop)  CMD ["/bin/bash"]            0B
+<missing>           8 weeks ago         /bin/sh -c mkdir -p /run/systemd && echo 'do…   7B
+<missing>           8 weeks ago         /bin/sh -c set -xe   && echo '#!/bin/sh' > /…   745B
+<missing>           8 weeks ago         /bin/sh -c [ -z "$(apt-get indextargets)" ]     987kB
+<missing>           8 weeks ago         /bin/sh -c #(nop) ADD file:3ddd02d976792b6c6…   63.2MB
+vyyalacn@UbuntuDocker:~/devops/3.1/backend$ docker history backend31
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+1573cf9ca450        2 minutes ago       /bin/sh -c #(nop)  CMD ["/bin/bash"]            0B
+dc7596d3df73        2 minutes ago       /bin/sh -c #(nop) WORKDIR /backend-example-d…   0B
+dcacfb99e38a        2 minutes ago       /bin/sh -c #(nop)  EXPOSE 8000                  0B
+6938ac31d9c0        3 minutes ago       /bin/sh -c apt-get update && apt-get install…   268MB
+62687182abd6        2 weeks ago         /bin/sh -c #(nop)  ENV FRONT_URL=http://loca…   0B
+3556258649b2        8 weeks ago         /bin/sh -c #(nop)  CMD ["/bin/bash"]            0B
+<missing>           8 weeks ago         /bin/sh -c mkdir -p /run/systemd && echo 'do…   7B
+<missing>           8 weeks ago         /bin/sh -c set -xe   && echo '#!/bin/sh' > /…   745B
+<missing>           8 weeks ago         /bin/sh -c [ -z "$(apt-get indextargets)" ]     987kB
+<missing>           8 weeks ago         /bin/sh -c #(nop) ADD file:3ddd02d976792b6c6…   63.2MB
+
+
+vyyalacn@UbuntuDocker:~/devops/3.1/backend$ cat Dockerfile
+FROM ubuntu:18.04
+
+ENV FRONT_URL=http://localhost:5000
+
+RUN apt-get update && apt-get install -y curl git && \
+    git clone https://github.com/docker-hy/backend-example-docker.git /backend-example-docker && \
+    curl -sL https://deb.nodesource.com/setup_10.x | bash && \
+    apt install -y nodejs && \
+    npm install webpack
+
+EXPOSE 8000
+
+WORKDIR /backend-example-docker
+
+CMD ["/bin/bash"]
+
+
+FRONTEND
+==========
+
+vyyalacn@UbuntuDocker:~/devops/3.1/frontend$ docker history frontend31
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+07ffca77d92b        2 weeks ago         /bin/sh -c #(nop)  CMD ["/bin/bash"]            0B
+ede04841b727        2 weeks ago         /bin/sh -c #(nop)  EXPOSE 5000                  0B
+7aae1dba1213        2 weeks ago         /bin/sh -c npm install webpack                  160MB
+61fc8789a0a5        2 weeks ago         /bin/sh -c apt install -y nodejs                82.3MB
+71314b556ee6        2 weeks ago         /bin/sh -c curl -sL https://deb.nodesource.c…   34.6MB
+79f48429cec9        2 weeks ago         /bin/sh -c git clone https://github.com/dock…   574kB
+a4abd63f5bab        2 weeks ago         /bin/sh -c apt-get update && apt-get install…   122MB
+6c6f19efcc96        2 weeks ago         /bin/sh -c #(nop) WORKDIR /frontend-example-…   0B
+99bac02f44a7        2 weeks ago         /bin/sh -c #(nop)  ENV API_URL=http://localh…   0B
+3556258649b2        8 weeks ago         /bin/sh -c #(nop)  CMD ["/bin/bash"]            0B
+<missing>           8 weeks ago         /bin/sh -c mkdir -p /run/systemd && echo 'do…   7B
+<missing>           8 weeks ago         /bin/sh -c set -xe   && echo '#!/bin/sh' > /…   745B
+<missing>           8 weeks ago         /bin/sh -c [ -z "$(apt-get indextargets)" ]     987kB
+<missing>           8 weeks ago         /bin/sh -c #(nop) ADD file:3ddd02d976792b6c6…   63.2MB
+vyyalacn@UbuntuDocker:~/devops/3.1/frontend$ docker history frontend31b
+IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT
+05f800dd2b74        16 minutes ago      /bin/sh -c #(nop)  CMD ["/bin/bash"]            0B
+2644afdcb6c1        16 minutes ago      /bin/sh -c #(nop) WORKDIR /frontend-example-…   0B
+4b9c6faacc94        16 minutes ago      /bin/sh -c #(nop)  EXPOSE 5000                  0B
+42220d683b5e        16 minutes ago      /bin/sh -c apt-get update && apt-get install…   268MB
+99bac02f44a7        2 weeks ago         /bin/sh -c #(nop)  ENV API_URL=http://localh…   0B
+3556258649b2        8 weeks ago         /bin/sh -c #(nop)  CMD ["/bin/bash"]            0B
+<missing>           8 weeks ago         /bin/sh -c mkdir -p /run/systemd && echo 'do…   7B
+<missing>           8 weeks ago         /bin/sh -c set -xe   && echo '#!/bin/sh' > /…   745B
+<missing>           8 weeks ago         /bin/sh -c [ -z "$(apt-get indextargets)" ]     987kB
+<missing>           8 weeks ago         /bin/sh -c #(nop) ADD file:3ddd02d976792b6c6…   63.2MB
+
+
+vyyalacn@UbuntuDocker:~/devops/3.1/frontend$ cat Dockerfile
+FROM ubuntu:18.04
+
+ENV API_URL=http://localhost:8000
+
+RUN apt-get update && apt-get install -y wget curl git && \
+    git clone https://github.com/docker-hy/frontend-example-docker.git /frontend-example-docker && \
+    curl -sL https://deb.nodesource.com/setup_10.x | bash && \
+    apt install -y nodejs && \
+    npm install webpack
+
+
+EXPOSE 5000
+
+WORKDIR /frontend-example-docker
+
+CMD ["/bin/bash"]
+
+
