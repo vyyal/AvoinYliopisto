@@ -16,27 +16,32 @@ WORKDIR /opt
 ENTRYPOINT ["/root/.local/bin/yle-dl"]
 
 
-Fetchin file fails because server not in Finland
-=================================================
+Fetchin file from YLE
+=====================
 
-
-vyyalacn@UbuntuDocker:~/devops/3.2$ docker run -it -v $(pwd)/yle:/opt yle-dl1 -o /opt/uutiset.mkv https://yle.fi/uutiset/3-10983493
+vyyalacn@UbuntuDocker:~/devops/3.2$ docker run -it -v $(pwd)/yle:/opt yle-dl1 -o /opt/uutiset.mkv https://areena.yle.fi/1-50289176
 yle-dl 20190614: Download media files from Yle Areena and Elävä Arkisto
 Copyright (C) 2009-2019 Antti Ajanki <antti.ajanki@iki.fi>, license: GPLv3
 
-ERROR: Can't read https://player.api.yle.fi/v1/preview/13-3-10983507.json?language=fin&ssl=true&countryCode=FI&host=areenaylefi&app_id=player_static_prod&app_key=8930d72170e48303cf5f3867780d549b
-Traceback (most recent call last):
-  File "/root/.local/lib/python3.5/site-packages/yledl/http.py", line 86, in get
-    r.raise_for_status()
-  File "/root/.local/lib/python3.5/site-packages/requests/models.py", line 940, in raise_for_status
-    raise HTTPError(http_error_msg, response=self)
-requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://player.api.yle.fi/v1/preview/13-3-10983507.json?language=fin&ssl=true&countryCode=FI&host=areenaylefi&app_id=player_static_prod&app_key=8930d72170e48303cf5f3867780d549b
-ERROR: Can't read https://player.yle.fi/api/v1/programs.jsonp?id=13-3-10983507&callback=yleEmbed.programJsonpCallback
-Traceback (most recent call last):
-  File "/root/.local/lib/python3.5/site-packages/yledl/http.py", line 86, in get
-    r.raise_for_status()
-  File "/root/.local/lib/python3.5/site-packages/requests/models.py", line 940, in raise_for_status
-    raise HTTPError(http_error_msg, response=self)
-requests.exceptions.HTTPError: 404 Client Error: Not Found for url: https://player.yle.fi/api/v1/programs.jsonp?id=13-3-10983507&callback=yleEmbed.programJsonpCallback
-ERROR: Unsupported stream: Media not found
-ERROR: This clip is only available in Finland and according to Yle you are located abroad
+Output file: /opt/uutiset.mkv
+[matroska @ 0x171ed40] Error parsing AAC extradata, unable to determine samplerate.
+Could not write header for output file #0 (incorrect codec parameters ?): Invalid argument
+WARNING: Unsupported extension .mkv. Replacing it with .mp4
+Output file: /opt/uutiset.mp4
+--2019-09-23 13:53:33--  https://cdnsecakmi.kaltura.com/p/1955031/sp/195503100/playManifest/entryId/1_j263cneo/flavorId/0_frhz9a9b/format/url/protocol/https/a.mp4?uiConfId=43362851&referrer=aHR0cHM6Ly9hcmVlbmEueWxlLmZpLzEtNTAyODkxNzY=&playSessionId=11111111-1111-1111-1111-111111111111&clientTag=html5:v0.39.4
+Resolving cdnsecakmi.kaltura.com (cdnsecakmi.kaltura.com)... 104.110.244.172
+Connecting to cdnsecakmi.kaltura.com (cdnsecakmi.kaltura.com)|104.110.244.172|:443... connected.
+HTTP request sent, awaiting response... 302 Moved Temporarily
+Location: https://ylekaod-a.akamaihd.net/s/p/1955031/sp/195503100/serveFlavor/entryId/1_j263cneo/v/2/ev/7/flavorId/0_frhz9a9b/name/a.mp4?__hdnea__=st=1569246813~exp=1569261213~acl=/s/p/1955031/sp/195503100/serveFlavor/entryId/1_j263cneo/v/2/ev/7/flavorId/0_frhz9a9b/name/a.mp4*~hmac=e7f866e8022ba6ef5c52826f2b91b035d5f3be5afb42a43aed6af7409b6fbb00 [following]
+--2019-09-23 13:53:33--  https://ylekaod-a.akamaihd.net/s/p/1955031/sp/195503100/serveFlavor/entryId/1_j263cneo/v/2/ev/7/flavorId/0_frhz9a9b/name/a.mp4?__hdnea__=st=1569246813~exp=1569261213~acl=/s/p/1955031/sp/195503100/serveFlavor/entryId/1_j263cneo/v/2/ev/7/flavorId/0_frhz9a9b/name/a.mp4*~hmac=e7f866e8022ba6ef5c52826f2b91b035d5f3be5afb42a43aed6af7409b6fbb00
+Resolving ylekaod-a.akamaihd.net (ylekaod-a.akamaihd.net)... 88.221.134.16, 88.221.134.49
+Connecting to ylekaod-a.akamaihd.net (ylekaod-a.akamaihd.net)|88.221.134.16|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 55886162 (53M) [video/mp4]
+Saving to: ‘/opt/uutiset.mp4’
+
+/opt/uutiset.mp4                        100%[============================================================================>]  53.30M  6.38MB/s    in 8.5s
+
+2019-09-23 13:53:42 (6.26 MB/s) - ‘/opt/uutiset.mp4’ saved [55886162/55886162]
+
+Stream saved to /opt/uutiset.mp4
