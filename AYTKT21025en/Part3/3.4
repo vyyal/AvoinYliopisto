@@ -16,3 +16,47 @@ FRONTEND AND BACKEND NEW SIZE
 34_frontend                             latest              6d8af97a1a98        2 minutes ago       257MB
 
 
+
+
+vyyalacn@UbuntuDocker:~/devops/3.4$ cat frontend/Dockerfile
+FROM node:alpine
+
+ENV API_URL=http://localhost:8000
+
+RUN apk add -y git && \
+    git clone https://github.com/docker-hy/frontend-example-docker.git /app && \
+    cd /app && \
+    #curl -sL https://deb.nodesource.com/setup_10.x | bash && \
+    npm install webpack && \
+    addgroup -S app && \
+    adduser -S app && \
+    chown -R app:app /app
+
+
+EXPOSE 5000
+
+USER app
+
+WORKDIR /app
+
+#CMD ["node"]
+
+
+vyyalacn@UbuntuDocker:~/devops/3.4$ cat backend/Dockerfile
+FROM node:alpine
+
+ENV FRONT_URL=http://localhost:5000
+
+RUN apk add git && \
+    git clone https://github.com/docker-hy/backend-example-docker.git /app && \
+    addgroup -S app && \
+    adduser -S app && \
+    chown -R app:app /app
+
+EXPOSE 8000
+
+USER app
+
+WORKDIR /app
+
+#CMD ["node"]
