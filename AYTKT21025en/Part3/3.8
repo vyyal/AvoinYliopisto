@@ -1,0 +1,247 @@
+3.8a
+
+Used Google Cloupd Platform to create guestbook app with front and backend
+
+
+1) Created clustester "allandtest1" in zone europe-north1-a
+
+2) downloaded axample setup from 
+git clone \
+    https://github.com/kubernetes/examples
+
+3) setup credentials
+
+alland_vyyrylainen@cloudshell:~/examples (devops-with-docker)$ gcloud container clusters \
+>     get-credentials allandtest1 \
+>     --zone europe-north1-a
+Fetching cluster endpoint and auth data.
+kubeconfig entry generated for allandtest1.
+
+
+4) deploy master controller
+
+cat redis-master-deployment.yaml
+
+apiVersion: apps/v1 #  for k8s versions before 1.9.0 use apps/v1beta2  and before 1.8.0 use extensions/v1beta1
+kind: Deployment
+metadata:
+  name: redis-master
+spec:
+  selector:
+    matchLabels:
+      app: redis
+      role: master
+      tier: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis
+        role: master
+        tier: backend
+    spec:
+      containers:
+      - name: master
+        image: k8s.gcr.io/redis:e2e  # or just image: redis
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 6379
+
+alland_vyyrylainen@cloudshell:~/examples/guestbook (devops-with-docker)$ kubectl create -f redis-master-deployment.yaml
+deployment.apps/redis-master created
+
+
+5) check pod running
+
+alland_vyyrylainen@cloudshell:~/examples/guestbook (devops-with-docker)$ kubectl get pods
+NAME                            READY   STATUS    RESTARTS   AGE
+redis-master-6fbbc44567-ntxhk   1/1     Running   0          94s
+
+
+6) create a service
+
+alland_vyyrylainen@cloudshell:~/examples/guestbook (devops-with-docker)$ cat redis-master-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-master
+  labels:
+    app: redis
+    role: master
+    tier: backend
+spec:
+  ports:
+  - port: 6379
+    targetPort: 6379
+  selector:
+    app: redis
+    role: master
+    tier: backend
+
+
+    alland_vyyrylainen@cloudshell:~/examples/guestbook (devops-with-docker)$ kubectl create -f redis-master-service.yaml
+service/redis-master created
+
+7) check service
+alland_vyyrylainen@cloudshell:~/examples/guestbook (devops-with-docker)$ kubectl get service
+NAME           TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)    AGE
+kubernetes     ClusterIP   10.52.0.1     <none>        443/TCP    26m
+redis-master   ClusterIP   10.52.9.217   <none>        6379/TCP   34s
+
+
+8) setup redis workers
+
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: redis
+        role: slave
+        tier: backend
+    spec:
+      containers:
+      - name: slave
+        image: gcr.io/google_samples/gb-redisslave:v1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        env:
+        - name: GET_HOSTS_FROM
+          value: dns
+          # If your cluster config does not include a dns service, then to
+          # instead access an environment variable to find the master
+          # service's host, comment out the 'value: dns' line above, and
+          # uncomment the line below:
+          # value: env
+        ports:
+        - containerPort: 6379
+
+alland_vyyrylainen@cloudshell:~/examples/guestbook (devops-with-docker)$ kubectl create -f redis-slave-deployment.yaml
+deployment.apps/redis-slave created
+
+9) check redis workers
+
+alland_vyyrylainen@cloudshell:~/examples/guestbook (devops-with-docker)$ kubectl get pods
+NAME                            READY   STATUS    RESTARTS   AGE
+redis-master-6fbbc44567-ntxhk   1/1     Running   0          7m52s
+redis-slave-74ccb764fc-hfdww    1/1     Running   0          67s
+redis-slave-74ccb764fc-p79s2    1/1     Running   0          67s
+
+10) create redis service
+
+alland_vyyrylainen@cloudshell:~/examples/guestbook (devops-with-docker)$ cat redis-slave-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-slave
+  labels:
+    app: redis
+    role: slave
+    tier: backend
+spec:
+  ports:
+  - port: 6379
+  selector:
+    app: redis
+    role: slave
+    tier: backend
+
+alland_vyyrylainen@cloudshell:~/examples/guestbook (devops-with-docker)$ kubectl create -f redis-slave-service.yaml
+service/redis-slave created
+
+11) check redis slave service
+
+alland_vyyrylainen@cloudshell:~/examples/guestbook (devops-with-docker)$ kubectl get service
+NAME           TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)    AGE
+kubernetes     ClusterIP   10.52.0.1     <none>        443/TCP    31m
+redis-master   ClusterIP   10.52.9.217   <none>        6379/TCP   5m19s
+redis-slave    ClusterIP   10.52.0.155   <none>        6379/TCP   5s
+
+
+12) create a frontend
+
+alland_vyyrylainen@cloudshell:~/examples/guestbook (devops-with-docker)$ cat frontend-deployment.yaml
+apiVersion: apps/v1 #  for k8s versions before 1.9.0 use apps/v1beta2  and before 1.8.0 use extensions/v1beta1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  selector:
+    matchLabels:
+      app: guestbook
+      tier: frontend
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: guestbook
+        tier: frontend
+    spec:
+      containers:
+      - name: php-redis
+        image: gcr.io/google-samples/gb-frontend:v4
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        env:
+        - name: GET_HOSTS_FROM
+          value: dns
+          # If your cluster config does not include a dns service, then to
+          # instead access environment variables to find service host
+          # info, comment out the 'value: dns' line above, and uncomment the
+          # line below:
+          # value: env
+        ports:
+        - containerPort: 80
+
+
+alland_vyyrylainen@cloudshell:~/examples/guestbook (devops-with-docker)$ kubectl create -f frontend-deployment.yaml
+deployment.apps/frontend created
+
+13) make frontend service available from internet
+
+alland_vyyrylainen@cloudshell:~/examples/guestbook (devops-with-docker)$ sed -i -e 's/NodePort/LoadBalancer/g' frontend-service.yaml
+
+14) create frontend service
+alland_vyyrylainen@cloudshell:~/examples/guestbook (devops-with-docker)$ kubectl create -f frontend-service.yaml
+service/frontend created
+
+15) check frontend service
+
+alland_vyyrylainen@cloudshell:~/examples/guestbook (devops-with-docker)$ kubectl get service
+NAME           TYPE           CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
+frontend       LoadBalancer   10.52.2.227   <pending>     80:30848/TCP   8s
+kubernetes     ClusterIP      10.52.0.1     <none>        443/TCP        38m
+redis-master   ClusterIP      10.52.9.217   <none>        6379/TCP       12m
+redis-slave    ClusterIP      10.52.0.155   <none>        6379/TCP       7m31s
+
+
+16) wait for external ip address for frontend
+
+alland_vyyrylainen@cloudshell:~/examples/guestbook (devops-with-docker)$ kubectl get services --watch
+NAME           TYPE           CLUSTER-IP    EXTERNAL-IP      PORT(S)        AGE
+frontend       LoadBalancer   10.52.2.227   35.228.162.197   80:30848/TCP   4m8s
+kubernetes     ClusterIP      10.52.0.1     <none>           443/TCP        42m
+redis-master   ClusterIP      10.52.9.217   <none>           6379/TCP       16m
+redis-slave    ClusterIP      10.52.0.155   <none>           6379/TCP       11m
+
+17) tested guestbook app with chrome browser
+
+18) Calland_vyyrylainen@cloudshell:~/examples/guestbook (devops-with-docker)$ wget 35.228.162.197
+--2020-01-06 13:28:06--  http://35.228.162.197/
+Connecting to 35.228.162.197:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 921 [text/html]
+Saving to: ‘index.html’
+
+index.html                             100%[============================================================================>]     921  --.-KB/s    in 0s
+
+2020-01-06 13:28:06 (126 MB/s) - ‘index.html’ saved [921/921]
+
+
+

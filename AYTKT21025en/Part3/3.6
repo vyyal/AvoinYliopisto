@@ -1,0 +1,120 @@
+3.6
+
+Docker backend reduced in size:
+================================
+
+36_backend            latest              1d122113bb9d        16 minutes ago      114MB
+35_backend            latest              aa39342acd85        3 days ago          178MB
+
+
+Backend Dockerfile
+==================
+
+vyyalacn@UbuntuDocker:~/devops/3.6$ cat backend/Dockerfile
+FROM node:alpine AS build-stage
+
+ENV FRONT_URL=http://localhost:5000
+
+RUN apk add git && \
+    git clone https://github.com/docker-hy/backend-example-docker.git /app && \
+    cd /app && \
+    npm install webpack && \
+    addgroup -S app && \
+    adduser -S app && \
+    chown -R app:app /app
+
+EXPOSE 8000
+
+USER app
+
+WORKDIR /app
+
+#CMD ["node"]
+
+FROM alpine:latest
+
+ENV FRONT_URL=http://localhost:5000
+
+RUN mkdir /app && \
+    addgroup -S app && \
+    adduser -S app && \
+    chown -R app:app /app
+
+
+COPY --from=build-stage /app /app
+
+RUN apk add --update nodejs npm
+#    npm install -g serve
+
+EXPOSE 8000
+
+USER app
+
+WORKDIR /app
+
+
+
+Docker compose file:
+====================
+
+
+vyyalacn@UbuntuDocker:~/devops/3.6$ cat docker-compose.yml
+version: '3'
+
+services:
+    redis:
+      image: redis
+      container_name: redis-server
+
+    nginx:
+      image: nginx
+      container_name: nginx
+      ports:
+        - 80:80
+      volumes:
+        - ./nginx.conf:/etc/nginx/nginx.conf
+        - ./curl-format.txt:/etc/curl-format.txt
+      depends_on:
+        - "backend"
+      command: [nginx-debug, '-g', 'daemon off;']
+
+    frontend:
+      build: frontend
+      ports:
+        - 5000:5000
+      container_name: frontend
+      entrypoint: serve -s -l 5000 dist
+
+    backend:
+      build: backend
+      ports:
+        - 8000:8000
+      container_name: backend
+      entrypoint: npm start
+      environment:
+        - REDIS=redis-server
+        - REDIS_port=6379
+        - DB_USERNAME=postgres
+        - DB_PASSWORD=MikkiHiiri
+        - DB_NAME=backenddb
+        - DB_HOST=db-server
+      depends_on:
+        - "redis"
+        - "db"
+
+    db:
+      image: postgres
+      restart: always
+      container_name: db-server
+      environment:
+        - POSTGRES_PASSWORD=MikkiHiiri
+        - POSTGRES_USER=postgres
+        - POSTGRES_DB=backenddb
+      volumes:
+        - ./database:/var/lib/postgresql/data
+
+    adminer:
+      image: adminer
+      restart: always
+      ports:
+        - 8080:8080

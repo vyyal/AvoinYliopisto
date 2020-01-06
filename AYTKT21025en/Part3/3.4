@@ -3,17 +3,15 @@
 FRONTEND AND BACKEND ORIGINAL SIZE
 ==================================
 
-
-vyyalacn@UbuntuDocker:~/devops$ docker images|grep end
-33_backend                              latest              005c43e12fd5        46 hours ago        383MB
-33_frontend                             latest              96071d068342        47 hours ago        463MB
+33_frontend           latest              ba0b6e4e8ab4        6 hours ago         468MB
+33_backend            latest              ae5c2513746a        2 weeks ago         384MB
 
 
 FRONTEND AND BACKEND NEW SIZE
 ==================================
+34_frontend           latest              282570886509        2 weeks ago         257MB
+34_backend            latest              f4842778549d        2 weeks ago         178MB
 
-34_backend                              latest              4996b28fb0f6        45 seconds ago      97.1MB
-34_frontend                             latest              6d8af97a1a98        2 minutes ago       257MB
 
 
 
@@ -40,8 +38,6 @@ USER app
 WORKDIR /app
 
 #CMD ["node"]
-
-
 vyyalacn@UbuntuDocker:~/devops/3.4$ cat backend/Dockerfile
 FROM node:alpine
 
@@ -49,6 +45,8 @@ ENV FRONT_URL=http://localhost:5000
 
 RUN apk add git && \
     git clone https://github.com/docker-hy/backend-example-docker.git /app && \
+    cd /app && \
+    npm install webpack && \
     addgroup -S app && \
     adduser -S app && \
     chown -R app:app /app
@@ -60,3 +58,4 @@ USER app
 WORKDIR /app
 
 #CMD ["node"]
+
